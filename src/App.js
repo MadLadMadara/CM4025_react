@@ -1,60 +1,39 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './App.css';
-class MyToDoList extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { items: [], text: ''};
-    this.valChange = this.valChange.bind(this);
-    this.valSubmit = this.valSubmit.bind(this);
-  }
-  render() {
-    return (
-      <div className="App-header">
-        <h1>My Fancy To Do List</h1>
-        <TodoList items={this.state.items} />
-        <form onSubmit={this.valSubmit}>
-          <label htmlFor="new-todo">
-              What should we do next....?
-          </label>
-          <input
-            id="new-todo"
-            onChange={this.valChange}
-            value={this.state.text}
-          />
-          <button>
-            Add #{this.state.items.length +1}
-          </button>
-        </form>
-      </div>
-    );
-  }
-  valChange(e) {
-    this.setState({text: e.target.value})
-  }
-  valSubmit(e) {
-    e.preventDefault();
-    if(!this.state.text.length){
-    return;
-    }
-    const newItem = {
-      text: this.state.text,
-      id: Date.now()
-    };
-    this.setState(state => ({
-      items: state.items.concat(newItem),
-      text: ''
-    }));
-  }
+import {BrowserRouter as Router,Route,} from "react-router-dom";
+
+
+import Navbar from './components/Navbar';
+import Home from './contents/Home';
+import About from './contents/About';
+import Education from './contents/Education';
+import Skills from './contents/Skills';
+import Contacts from './contents/Contacts';
+
+
+
+function App() {
+ return (
+ <Router>
+  <div className="App">
+    <Navbar />
+    <Route exact path="/">
+      <Home />
+    </Route>
+    <Route exact path="/about">
+      <About />
+    </Route>
+    <Route exact path="/education">
+      <Education />
+    </Route>
+    <Route exact path="/skills">
+      <Skills />
+    </Route>
+    <Route exact path="/contacts">
+      <Contacts />
+    </Route>
+  </div>
+ </Router>
+ )
 }
-class TodoList extends React.Component {
-render() {
-  return (
-    <ul>
-      {this.props.items.map(item => (
-      <li key={item.id}>{item.text}</li>
-      ))}
-    </ul>
-  );
-}
-}
-export default MyToDoList;
+export default App;
